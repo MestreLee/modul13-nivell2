@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Llistat de empleats</title>
+</head>
+<body>
+
+</body>
+<H1>Llistat de empleats</H1>
+	<table border=1>
+		<thead>
+			<tr> <th> Id <th> Nom <th> Feina <th> Sou <th> Borrar <th> Modificar</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${empleats.empty}">
+				<td colspan="2">No hi ha cap empleat</td>
+			</tr>
+			<tr th:each="empleat: ${empleats}">
+				<td th:text="${empleat.id}"></td>
+				<td th:text="${empleat.nom}"></td>
+				<td th:text="${empleat.feina}"></td>
+				<td th:text="${empleat.sou}"></td>
+				<td><a th:href="@{/borrar/}+${empleat.id}">Borrar</a></td>
+				<td><a th:href="@{/modificar/}+${empleat.id}">Modificar</a></td>
+			<tr>
+		</tbody>
+	</table>
+	<form th:action="${action}" th:object="${empleat}" method = "post">
+		<br>
+		ID: <input type="text" th:field="*{id}" th:value="*{id}"><br>
+		Nom: <input type="text" th:field="*{nom}" th:value="*{nom}"><br>
+		Feina: 
+		  <select th:field="*{feina}">
+			<option th:each="tasca : ${feines}"
+					th:value= "${tasca}"
+					th:text="${tasca.nom}">
+			</option>
+		</select><br>
+		<input type=submit name=submit th:value="${boto}">
+	</form>
+	<form th:action="${action2}" th:object="${empleat}" method = "post">
+		<br>
+		<!--ID: <input type="text" th:field="*{id}" th:value="*{id}"><br>-->
+		Feina: 
+		  <select th:field="*{feina}">
+			<option th:each="tasca : ${feines}"
+					th:value= "${tasca}"
+					th:text="${tasca.nom}">
+			</option>
+		</select><br>
+		<input type=submit name=submit th:value="${boto2}">
+	</form>
+</html>
